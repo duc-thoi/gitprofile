@@ -16,6 +16,9 @@ const Footer = ({
       ) : (
         <div dangerouslySetInnerHTML={{ __html: content }} />
       )}
+      <div className="text-xs text-base-content opacity-60">
+        Built with GitProfile
+      </div>
     </div>
   );
 };
