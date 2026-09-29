@@ -5,6 +5,7 @@ import { getDevPost, getMediumPost } from '@arifszn/blog-js';
 import { formatDistance } from 'date-fns';
 import { SanitizedBlog } from '../../interfaces/sanitized-config';
 import { ga, skeleton } from '../../utils';
+import { accentAt } from '../../constants';
 import { Article } from '../../interfaces/article';
 
 const BlogCard = ({
@@ -95,7 +96,7 @@ const BlogCard = ({
     return articles && articles.length ? (
       articles.slice(0, blog.limit).map((article, index) => (
         <a
-          className="card shadow-md card-sm bg-base-100 cursor-pointer"
+          className="card shadow-md card-sm bg-base-100 cursor-pointer transition-transform hover:scale-[1.02]"
           key={index}
           href={article.link}
           onClick={(e) => {
@@ -132,7 +133,7 @@ const BlogCard = ({
               <div className="w-full">
                 <div className="flex items-start px-4">
                   <div className="text-center md:text-left w-full">
-                    <h2 className="font-medium text-base-content opacity-60">
+                    <h2 className="font-medium text-base-content">
                       {article.title}
                     </h2>
                     <p className="text-base-content opacity-50 text-xs">
@@ -146,7 +147,9 @@ const BlogCard = ({
                     <div className="mt-4 flex items-center flex-wrap justify-center md:justify-start">
                       {article.categories.map((category, index2) => (
                         <div
-                          className="py-2 px-4 text-xs leading-3 rounded-full bg-base-300 mr-1 mb-1 opacity-50 text-base-content"
+                          className={`badge badge-sm mr-1 mb-1 ${
+                            accentAt(index2).badge
+                          }`}
                           key={index2}
                         >
                           #{category}
@@ -172,7 +175,7 @@ const BlogCard = ({
 
   return (
     <div className="col-span-1 lg:col-span-2">
-      <div className="card bg-base-200 shadow-xl border border-base-300">
+      <div className="card bg-base-200 shadow-xl border border-info/20">
         <div className="card-body p-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
             <div className="flex items-center space-x-3">
@@ -183,8 +186,8 @@ const BlogCard = ({
                   className: 'rounded-xl',
                 })
               ) : (
-                <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-xl">
-                  <PiNewspaper className="text-2xl" />
+                <div className="flex items-center justify-center w-12 h-12 bg-info/10 rounded-xl">
+                  <PiNewspaper className="text-2xl text-info" />
                 </div>
               )}
               <div className="min-w-0 flex-1">

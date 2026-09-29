@@ -1,3 +1,4 @@
+import { accentAt } from '../../constants';
 import { skeleton } from '../../utils';
 
 const SkillCard = ({
@@ -28,7 +29,7 @@ const SkillCard = ({
             {loading ? (
               skeleton({ widthCls: 'w-32', heightCls: 'h-8' })
             ) : (
-              <span className="text-base-content opacity-70">Tech Stack</span>
+              <span className="text-primary">Tech Stack</span>
             )}
           </h5>
         </div>
@@ -37,7 +38,10 @@ const SkillCard = ({
             {loading
               ? renderSkeleton()
               : skills.map((skill, index) => (
-                  <div key={index} className="badge badge-primary badge-sm">
+                  <div
+                    key={index}
+                    className={`badge badge-sm ${accentAt(index).badge}`}
+                  >
                     {skill}
                   </div>
                 ))}

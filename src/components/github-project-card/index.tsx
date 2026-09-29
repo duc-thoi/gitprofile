@@ -74,7 +74,8 @@ const GithubProjectCard = ({
   const renderProjects = () => {
     return githubProjects.map((item, index) => (
       <a
-        className="card shadow-md card-sm bg-base-100 cursor-pointer"
+        className="card shadow-md card-sm bg-base-100 cursor-pointer border-l-4 transition-transform hover:scale-[1.02]"
+        style={{ borderLeftColor: getLanguageColor(item.language) }}
         href={item.html_url}
         key={index}
         onClick={(e) => {
@@ -94,7 +95,7 @@ const GithubProjectCard = ({
         <div className="flex justify-between flex-col p-8 h-full w-full">
           <div>
             <div className="flex items-center truncate">
-              <div className="card-title text-lg tracking-wide flex text-base-content opacity-60">
+              <div className="card-title text-lg tracking-wide flex text-base-content">
                 <MdInsertLink className="my-auto" />
                 <span>{item.name}</span>
               </div>
@@ -117,7 +118,7 @@ const GithubProjectCard = ({
             <div>
               <span className="flex items-center">
                 <div
-                  className="w-3 h-3 rounded-full mr-1 opacity-60"
+                  className="w-3 h-3 rounded-full mr-1"
                   style={{ backgroundColor: getLanguageColor(item.language) }}
                 />
                 <span>{item.language}</span>
@@ -132,7 +133,7 @@ const GithubProjectCard = ({
   return (
     <Fragment>
       <div className="col-span-1 lg:col-span-2">
-        <div className="card bg-base-200 shadow-xl border border-base-300">
+        <div className="card bg-base-200 shadow-xl border border-primary/20">
           <div className="card-body p-8">
             {/* Enhanced Header Section */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
@@ -145,7 +146,7 @@ const GithubProjectCard = ({
                   })
                 ) : (
                   <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-xl">
-                    <AiOutlineGithub className="text-2xl" />
+                    <AiOutlineGithub className="text-2xl text-primary" />
                   </div>
                 )}
                 <div className="min-w-0 flex-1">

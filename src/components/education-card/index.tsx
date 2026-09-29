@@ -13,7 +13,7 @@ const ListItem = ({
 }) => (
   <li className="mb-5 ml-4">
     <div
-      className="absolute w-2 h-2 bg-base-300 rounded-full border border-base-300 mt-1.5"
+      className="absolute w-2 h-2 bg-accent rounded-full border border-accent mt-1.5"
       style={{ left: '-4.5px' }}
     ></div>
     <div className="my-0.5 text-xs">{time}</div>
@@ -60,12 +60,12 @@ const EducationCard = ({
             {loading ? (
               skeleton({ widthCls: 'w-32', heightCls: 'h-8' })
             ) : (
-              <span className="text-base-content opacity-70">Education</span>
+              <span className="text-accent">Education</span>
             )}
           </h5>
         </div>
         <div className="text-base-content">
-          <ol className="relative border-l border-base-300 border-opacity-30 my-2 mx-4">
+          <ol className="relative border-l-2 border-accent/30 my-2 mx-4">
             {loading ? (
               renderSkeleton()
             ) : (
