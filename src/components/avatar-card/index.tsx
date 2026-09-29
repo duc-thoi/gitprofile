@@ -28,7 +28,7 @@ const AvatarCard: React.FC<AvatarCardProps> = ({
     <div className="card shadow-lg card-sm bg-base-100">
       <div className="grid place-items-center py-8">
         {loading || !profile ? (
-          <div className="avatar opacity-90">
+          <div className="avatar">
             <div className="mb-8 rounded-full w-32 h-32">
               {skeleton({
                 widthCls: 'w-full',
@@ -38,25 +38,31 @@ const AvatarCard: React.FC<AvatarCardProps> = ({
             </div>
           </div>
         ) : (
-          <div className="avatar opacity-90">
-            <div
-              className={`mb-8 rounded-full w-32 h-32 ${
-                avatarRing
-                  ? 'ring-3 ring-primary ring-offset-base-100 ring-offset-2'
-                  : ''
-              }`}
-            >
-              {
-                <LazyImage
-                  src={profile.avatar ? profile.avatar : FALLBACK_IMAGE}
-                  alt={profile.name}
-                  placeholder={skeleton({
-                    widthCls: 'w-full',
-                    heightCls: 'h-full',
-                    shape: '',
-                  })}
-                />
-              }
+          <div
+            className={`mb-8 rounded-full ${
+              avatarRing
+                ? 'p-1 bg-linear-to-tr from-primary via-secondary to-accent'
+                : ''
+            }`}
+          >
+            <div className="avatar">
+              <div
+                className={`rounded-full w-32 h-32 ${
+                  avatarRing ? 'bg-base-100 p-1' : ''
+                }`}
+              >
+                {
+                  <LazyImage
+                    src={profile.avatar ? profile.avatar : FALLBACK_IMAGE}
+                    alt={profile.name}
+                    placeholder={skeleton({
+                      widthCls: 'w-full',
+                      heightCls: 'h-full',
+                      shape: '',
+                    })}
+                  />
+                }
+              </div>
             </div>
           </div>
         )}
@@ -65,9 +71,7 @@ const AvatarCard: React.FC<AvatarCardProps> = ({
             {loading || !profile ? (
               skeleton({ widthCls: 'w-48', heightCls: 'h-8' })
             ) : (
-              <span className="text-base-content opacity-70">
-                {profile.name}
-              </span>
+              <span className="text-base-content">{profile.name}</span>
             )}
           </h5>
           <div className="mt-3 text-base-content font-mono">
@@ -85,7 +89,7 @@ const AvatarCard: React.FC<AvatarCardProps> = ({
             <a
               href={resumeFileUrl}
               target="_blank"
-              className="btn btn-outline btn-sm text-xs mt-6 opacity-50"
+              className="btn btn-primary btn-sm text-xs mt-6"
               download
               rel="noreferrer"
             >

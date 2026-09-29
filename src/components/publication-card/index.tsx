@@ -77,7 +77,7 @@ const PublicationCard = ({
   const renderPublications = () => {
     return publications.map((item, index) => (
       <a
-        className="card shadow-md card-sm bg-base-100 cursor-pointer"
+        className="card shadow-md card-sm bg-base-100 cursor-pointer transition-transform hover:scale-[1.02]"
         key={index}
         href={item.link}
         target="_blank"
@@ -88,7 +88,7 @@ const PublicationCard = ({
             <div className="w-full">
               <div className="px-4">
                 <div className="text-center w-full">
-                  <h2 className="font-medium opacity-60 mb-2">{item.title}</h2>
+                  <h2 className="font-medium mb-2">{item.title}</h2>
                   {item.conferenceName && (
                     <p className="text-base-content opacity-50 text-sm">
                       {item.conferenceName}
@@ -121,7 +121,7 @@ const PublicationCard = ({
   return (
     <Fragment>
       <div className="col-span-1 lg:col-span-2">
-        <div className="card bg-base-200 shadow-xl border border-base-300">
+        <div className="card bg-base-200 shadow-xl border border-secondary/20">
           <div className="card-body p-8">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
               <div className="flex items-center space-x-3">
@@ -132,8 +132,8 @@ const PublicationCard = ({
                     className: 'rounded-xl',
                   })
                 ) : (
-                  <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-xl">
-                    <AiOutlineBook className="text-2xl" />
+                  <div className="flex items-center justify-center w-12 h-12 bg-secondary/10 rounded-xl">
+                    <AiOutlineBook className="text-2xl text-secondary" />
                   </div>
                 )}
                 <div className="min-w-0 flex-1">
