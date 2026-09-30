@@ -39,7 +39,7 @@ const AvatarCard: React.FC<AvatarCardProps> = ({
           </div>
         ) : (
           <div
-            className={`mb-8 rounded-full ${
+            className={`mb-6 rounded-full ${
               avatarRing
                 ? 'p-1 bg-linear-to-tr from-primary via-secondary to-accent'
                 : ''
