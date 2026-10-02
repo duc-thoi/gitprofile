@@ -1,32 +1,8 @@
-import React from 'react';
+import { TbCertificate } from 'react-icons/tb';
 import { SanitizedCertification } from '../../interfaces/sanitized-config';
 import { skeleton } from '../../utils';
-
-const ListItem = ({
-  year,
-  name,
-  body,
-  link,
-}: {
-  year?: React.ReactNode;
-  name?: React.ReactNode;
-  body?: React.ReactNode;
-  link?: string;
-}) => (
-  <li className="mb-5 ml-4">
-    <div
-      className="absolute w-2 h-2 bg-info rounded-full border border-info mt-1.5"
-      style={{ left: '-4.5px' }}
-    ></div>
-    <div className="my-0.5 text-xs">{year}</div>
-    <div className="font-medium">
-      <a href={link} target="_blank" rel="noreferrer">
-        {name}
-      </a>
-    </div>
-    <h3 className="mb-4 font-normal">{body}</h3>
-  </li>
-);
+import SectionCard from '../section-card';
+import { Timeline, TimelineItem } from '../timeline';
 
 const CertificationCard = ({
   certifications,
@@ -39,18 +15,19 @@ const CertificationCard = ({
     const array = [];
     for (let index = 0; index < 2; index++) {
       array.push(
-        <ListItem
+        <TimelineItem
           key={index}
-          year={skeleton({
+          accent="info"
+          time={skeleton({
             widthCls: 'w-5/12',
             heightCls: 'h-4',
           })}
-          name={skeleton({
+          title={skeleton({
             widthCls: 'w-6/12',
             heightCls: 'h-4',
             className: 'my-1.5',
           })}
-          body={skeleton({ widthCls: 'w-6/12', heightCls: 'h-3' })}
+          subtitle={skeleton({ widthCls: 'w-6/12', heightCls: 'h-3' })}
         />,
       );
     }
@@ -59,38 +36,34 @@ const CertificationCard = ({
   };
 
   return (
-    <div className="card shadow-lg card-sm bg-base-100">
-      <div className="card-body">
-        <div className="mx-3">
-          <h5 className="card-title">
-            {loading ? (
-              skeleton({ widthCls: 'w-32', heightCls: 'h-8' })
-            ) : (
-              <span className="text-info">Certification</span>
-            )}
-          </h5>
-        </div>
-        <div className="text-base-content">
-          <ol className="relative border-l-2 border-info/30 my-2 mx-4">
-            {loading ? (
-              renderSkeleton()
-            ) : (
-              <>
-                {certifications.map((certification, index) => (
-                  <ListItem
-                    key={index}
-                    year={certification.year}
-                    name={certification.name}
-                    body={certification.body}
-                    link={certification.link}
-                  />
-                ))}
-              </>
-            )}
-          </ol>
-        </div>
+    <SectionCard
+      icon={<TbCertificate />}
+      title="Certification"
+      accent="info"
+      loading={loading}
+      size="sm"
+    >
+      <div className="text-base-content">
+        <Timeline accent="info">
+          {loading ? (
+            renderSkeleton()
+          ) : (
+            <>
+              {certifications.map((certification, index) => (
+                <TimelineItem
+                  key={index}
+                  accent="info"
+                  time={certification.year}
+                  title={certification.name}
+                  titleLink={certification.link}
+                  subtitle={certification.body}
+                />
+              ))}
+            </>
+          )}
+        </Timeline>
       </div>
-    </div>
+    </SectionCard>
   );
 };
 

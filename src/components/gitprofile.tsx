@@ -204,7 +204,7 @@ const GitProfileContent = ({
   }, [theme]);
 
   return (
-    <div className="fade-in h-screen">
+    <div className="fade-in min-h-screen">
       {error ? (
         <ErrorPage
           status={error.status}
@@ -213,89 +213,117 @@ const GitProfileContent = ({
         />
       ) : (
         <>
-          <div className={`p-4 lg:p-10 min-h-full ${BG_COLOR}`}>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 rounded-box">
+          <div
+            className={`relative overflow-hidden p-4 lg:p-10 min-h-screen ${BG_COLOR}`}
+          >
+            {/* Ambient glows give the flat background gradient some depth.
+                Kept at /10 so they stay subtle across all themes. */}
+            <div className="pointer-events-none absolute -top-40 -left-32 w-[32rem] h-[32rem] rounded-full bg-primary/10 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-48 -right-32 w-[32rem] h-[32rem] rounded-full bg-secondary/10 blur-3xl" />
+            <div className="relative max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 rounded-box">
               <div className="col-span-1">
                 <div className="grid grid-cols-1 gap-6">
                   {!sanitizedConfig.themeConfig.disableSwitch && (
-                    <ThemeChanger
-                      theme={theme}
-                      setTheme={setTheme}
-                      loading={loading}
-                      themeConfig={sanitizedConfig.themeConfig}
-                    />
+                    <div className="fade-in-up stagger-1">
+                      <ThemeChanger
+                        theme={theme}
+                        setTheme={setTheme}
+                        loading={loading}
+                        themeConfig={sanitizedConfig.themeConfig}
+                      />
+                    </div>
                   )}
-                  <AvatarCard
-                    profile={profile}
-                    loading={loading}
-                    avatarRing={sanitizedConfig.themeConfig.displayAvatarRing}
-                    resumeFileUrl={sanitizedConfig.resume.fileUrl}
-                  />
-                  <DetailsCard
-                    profile={profile}
-                    loading={loading}
-                    github={sanitizedConfig.github}
-                    social={sanitizedConfig.social}
-                  />
-                  {sanitizedConfig.skills.length !== 0 && (
-                    <SkillCard
+                  <div className="fade-in-up stagger-2">
+                    <AvatarCard
+                      profile={profile}
                       loading={loading}
-                      skills={sanitizedConfig.skills}
+                      avatarRing={sanitizedConfig.themeConfig.displayAvatarRing}
+                      resumeFileUrl={sanitizedConfig.resume.fileUrl}
                     />
+                  </div>
+                  <div className="fade-in-up stagger-3">
+                    <DetailsCard
+                      profile={profile}
+                      loading={loading}
+                      github={sanitizedConfig.github}
+                      social={sanitizedConfig.social}
+                    />
+                  </div>
+                  {sanitizedConfig.skills.length !== 0 && (
+                    <div className="fade-in-up stagger-4">
+                      <SkillCard
+                        loading={loading}
+                        skills={sanitizedConfig.skills}
+                      />
+                    </div>
                   )}
                   {sanitizedConfig.experiences.length !== 0 && (
-                    <ExperienceCard
-                      loading={loading}
-                      experiences={sanitizedConfig.experiences}
-                    />
+                    <div className="fade-in-up stagger-5">
+                      <ExperienceCard
+                        loading={loading}
+                        experiences={sanitizedConfig.experiences}
+                      />
+                    </div>
                   )}
                   {sanitizedConfig.certifications.length !== 0 && (
-                    <CertificationCard
-                      loading={loading}
-                      certifications={sanitizedConfig.certifications}
-                    />
+                    <div className="fade-in-up stagger-6">
+                      <CertificationCard
+                        loading={loading}
+                        certifications={sanitizedConfig.certifications}
+                      />
+                    </div>
                   )}
                   {sanitizedConfig.educations.length !== 0 && (
-                    <EducationCard
-                      loading={loading}
-                      educations={sanitizedConfig.educations}
-                    />
+                    <div className="fade-in-up stagger-7">
+                      <EducationCard
+                        loading={loading}
+                        educations={sanitizedConfig.educations}
+                      />
+                    </div>
                   )}
                 </div>
               </div>
               <div className="lg:col-span-2 col-span-1">
                 <div className="grid grid-cols-1 gap-6">
                   {sanitizedConfig.projects.github.display && (
-                    <GithubProjectCard
-                      header={sanitizedConfig.projects.github.header}
-                      limit={sanitizedConfig.projects.github.automatic.limit}
-                      githubProjects={githubProjects}
-                      loading={loading}
-                      googleAnalyticsId={sanitizedConfig.googleAnalytics.id}
-                    />
+                    <div className="fade-in-up stagger-1">
+                      <GithubProjectCard
+                        header={sanitizedConfig.projects.github.header}
+                        limit={sanitizedConfig.projects.github.automatic.limit}
+                        githubProjects={githubProjects}
+                        loading={loading}
+                        googleAnalyticsId={sanitizedConfig.googleAnalytics.id}
+                      />
+                    </div>
                   )}
                   {sanitizedConfig.publications.length !== 0 && (
-                    <PublicationCard
-                      loading={loading}
-                      publications={sanitizedConfig.publications}
-                    />
+                    <div className="fade-in-up stagger-2">
+                      <PublicationCard
+                        loading={loading}
+                        publications={sanitizedConfig.publications}
+                      />
+                    </div>
                   )}
                   {sanitizedConfig.projects.external.projects.length !== 0 && (
-                    <ExternalProjectCard
-                      loading={loading}
-                      header={sanitizedConfig.projects.external.header}
-                      externalProjects={
-                        sanitizedConfig.projects.external.projects
-                      }
-                      googleAnalyticId={sanitizedConfig.googleAnalytics.id}
-                    />
+                    <div className="fade-in-up stagger-3">
+                      <ExternalProjectCard
+                        loading={loading}
+                        header={sanitizedConfig.projects.external.header}
+                        externalProjects={
+                          sanitizedConfig.projects.external.projects
+                        }
+                        googleAnalyticId={sanitizedConfig.googleAnalytics.id}
+                      />
+                    </div>
                   )}
                   {sanitizedConfig.blog.display && (
-                    <BlogCard
-                      loading={loading}
-                      googleAnalyticsId={sanitizedConfig.googleAnalytics.id}
-                      blog={sanitizedConfig.blog}
-                    />
+                    <div className="fade-in-up stagger-4">
+                      <BlogCard
+                        loading={loading}
+                        googleAnalyticsId={sanitizedConfig.googleAnalytics.id}
+                        blog={sanitizedConfig.blog}
+                      />
+                    </div>
                   )}
                 </div>
               </div>
@@ -305,7 +333,7 @@ const GitProfileContent = ({
             <footer
               className={`p-4 footer ${BG_COLOR} text-base-content footer-center`}
             >
-              <div className="card card-sm bg-base-100 shadow-sm">
+              <div className="bg-base-100/60 backdrop-blur rounded-full px-6 py-2 shadow-sm">
                 <Footer content={sanitizedConfig.footer} loading={loading} />
               </div>
             </footer>

@@ -51,14 +51,32 @@
   --noise: 0;
 }
 
+/* Inter carries the body copy, Plus Jakarta Sans the headings. Both are
+   loaded in index.html; the system stack stays as the fallback. */
+@theme {
+  --font-sans:
+    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  --font-display:
+    'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'Roboto', 'Helvetica Neue', sans-serif;
+}
+
+/* Scrollbars follow the active theme rather than a fixed grey, so they do not
+   read as a bright stripe on `dark`, `black` or `luxury`. */
 * {
   scrollbar-width: thin;
+  scrollbar-color: color-mix(
+      in oklab,
+      var(--color-base-content) 30%,
+      transparent
+    )
+    var(--color-base-200);
 }
 
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: var(--color-base-200);
 }
 
 @media screen and (min-width: 966px) {
@@ -66,20 +84,22 @@
   .scroller {
     width: 8px;
     height: 8px;
-    background-color: #f1f1f1;
+    background-color: var(--color-base-200);
   }
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #888;
+  background-color: color-mix(
+    in oklab,
+    var(--color-base-content) 30%,
+    transparent
+  );
   border-radius: 10px;
 }
 
 body {
   margin: 0;
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -120,5 +140,67 @@ svg {
   }
   to {
     opacity: 1;
+  }
+}
+
+/* Cards rise into place as the page assembles. `forwards` holds the end state
+   so the delayed items do not flash back to transparent. */
+.fade-in-up {
+  opacity: 0;
+  animation-name: fadeInUp;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.stagger-1 {
+  animation-delay: 60ms;
+}
+
+.stagger-2 {
+  animation-delay: 120ms;
+}
+
+.stagger-3 {
+  animation-delay: 180ms;
+}
+
+.stagger-4 {
+  animation-delay: 240ms;
+}
+
+.stagger-5 {
+  animation-delay: 300ms;
+}
+
+.stagger-6 {
+  animation-delay: 360ms;
+}
+
+.stagger-7 {
+  animation-delay: 420ms;
+}
+
+.stagger-8 {
+  animation-delay: 480ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in,
+  .fade-in-up,
+  [class*='stagger-'] {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
   }
 }

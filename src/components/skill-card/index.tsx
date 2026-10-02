@@ -1,5 +1,7 @@
+import { HiOutlineSparkles } from 'react-icons/hi2';
 import { accentAt } from '../../constants';
 import { skeleton } from '../../utils';
+import SectionCard from '../section-card';
 
 const SkillCard = ({
   loading,
@@ -13,7 +15,7 @@ const SkillCard = ({
     for (let index = 0; index < 12; index++) {
       array.push(
         <div key={index}>
-          {skeleton({ widthCls: 'w-16', heightCls: 'h-4', className: 'm-1' })}
+          {skeleton({ widthCls: 'w-16', heightCls: 'h-5' })}
         </div>,
       );
     }
@@ -22,33 +24,28 @@ const SkillCard = ({
   };
 
   return (
-    <div className="card shadow-lg card-sm bg-base-100">
-      <div className="card-body">
-        <div className="mx-3">
-          <h5 className="card-title">
-            {loading ? (
-              skeleton({ widthCls: 'w-32', heightCls: 'h-8' })
-            ) : (
-              <span className="text-primary">Tech Stack</span>
-            )}
-          </h5>
-        </div>
-        <div className="p-3 flow-root">
-          <div className="-m-1 flex flex-wrap justify-center gap-2">
-            {loading
-              ? renderSkeleton()
-              : skills.map((skill, index) => (
-                  <div
-                    key={index}
-                    className={`badge badge-sm ${accentAt(index).badge}`}
-                  >
-                    {skill}
-                  </div>
-                ))}
-          </div>
-        </div>
+    <SectionCard
+      icon={<HiOutlineSparkles />}
+      title="Tech Stack"
+      accent="primary"
+      loading={loading}
+      size="sm"
+    >
+      <div className="flex flex-wrap justify-center gap-2">
+        {loading
+          ? renderSkeleton()
+          : skills.map((skill, index) => (
+              <div
+                key={index}
+                className={`badge badge-soft badge-md transition-colors ${
+                  accentAt(index).badge
+                }`}
+              >
+                {skill}
+              </div>
+            ))}
       </div>
-    </div>
+    </SectionCard>
   );
 };
 

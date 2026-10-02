@@ -1,8 +1,9 @@
-import { Fragment } from 'react';
 import LazyImage from '../lazy-image';
 import { MdOpenInNew } from 'react-icons/md';
 import { ga, skeleton } from '../../utils';
+import { ITEM_CARD_CLASS } from '../../constants';
 import { SanitizedExternalProject } from '../../interfaces/sanitized-config';
+import SectionCard from '../section-card';
 
 const ExternalProjectCard = ({
   externalProjects,
@@ -19,7 +20,10 @@ const ExternalProjectCard = ({
     const array = [];
     for (let index = 0; index < externalProjects.length; index++) {
       array.push(
-        <div className="card shadow-md card-sm bg-base-100" key={index}>
+        <div
+          className="card card-sm bg-base-100 border border-base-300 shadow-md h-full"
+          key={index}
+        >
           <div className="p-8 h-full w-full">
             <div className="flex items-center flex-col">
               <div className="w-full">
@@ -70,7 +74,7 @@ const ExternalProjectCard = ({
   const renderExternalProjects = () => {
     return externalProjects.map((item, index) => (
       <a
-        className="card shadow-md card-sm bg-base-100 cursor-pointer transition-transform hover:scale-[1.02]"
+        className={`${ITEM_CARD_CLASS} cursor-pointer`}
         key={index}
         href={item.link}
         onClick={(e) => {
@@ -94,10 +98,12 @@ const ExternalProjectCard = ({
             <div className="w-full">
               <div className="px-4">
                 <div className="text-center w-full">
-                  <h2 className="font-medium text-center mb-2">{item.title}</h2>
+                  <h2 className="font-display font-semibold text-center mb-2">
+                    {item.title}
+                  </h2>
                   {item.imageUrl && (
                     <div className="avatar opacity-90">
-                      <div className="w-24 h-24 mask mask-squircle">
+                      <div className="w-24 h-24 mask mask-squircle ring-1 ring-base-300">
                         <LazyImage
                           src={item.imageUrl}
                           alt={'thumbnail'}
@@ -110,7 +116,7 @@ const ExternalProjectCard = ({
                       </div>
                     </div>
                   )}
-                  <p className="mt-2 text-base-content text-sm text-justify">
+                  <p className="mt-2 text-base-content/70 text-sm text-justify line-clamp-3">
                     {item.description}
                   </p>
                 </div>
@@ -123,44 +129,18 @@ const ExternalProjectCard = ({
   };
 
   return (
-    <Fragment>
-      <div className="col-span-1 lg:col-span-2">
-        <div className="card bg-base-200 shadow-xl border border-accent/20">
-          <div className="card-body p-8">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-              <div className="flex items-center space-x-3">
-                {loading ? (
-                  skeleton({
-                    widthCls: 'w-12',
-                    heightCls: 'h-12',
-                    className: 'rounded-xl',
-                  })
-                ) : (
-                  <div className="flex items-center justify-center w-12 h-12 bg-accent/10 rounded-xl">
-                    <MdOpenInNew className="text-2xl text-accent" />
-                  </div>
-                )}
-                <div className="min-w-0 flex-1">
-                  <h3 className="text-base sm:text-lg font-bold text-base-content truncate">
-                    {loading
-                      ? skeleton({ widthCls: 'w-40', heightCls: 'h-8' })
-                      : header}
-                  </h3>
-                  <div className="text-base-content/60 text-xs sm:text-sm mt-1 truncate">
-                    {loading
-                      ? skeleton({ widthCls: 'w-32', heightCls: 'h-4' })
-                      : `Showcasing ${externalProjects.length} projects`}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {loading ? renderSkeleton() : renderExternalProjects()}
-            </div>
-          </div>
-        </div>
+    <SectionCard
+      icon={<MdOpenInNew />}
+      title={header}
+      subtitle={`Showcasing ${externalProjects.length} projects`}
+      accent="accent"
+      loading={loading}
+      wide
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {loading ? renderSkeleton() : renderExternalProjects()}
       </div>
-    </Fragment>
+    </SectionCard>
   );
 };
 

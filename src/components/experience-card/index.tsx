@@ -1,32 +1,9 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
+import { MdWorkOutline } from 'react-icons/md';
 import { SanitizedExperience } from '../../interfaces/sanitized-config';
 import { skeleton } from '../../utils';
-
-const ListItem = ({
-  time,
-  position,
-  company,
-  companyLink,
-}: {
-  time: React.ReactNode;
-  position?: React.ReactNode;
-  company?: React.ReactNode;
-  companyLink?: string;
-}) => (
-  <li className="mb-5 ml-4">
-    <div
-      className="absolute w-2 h-2 bg-secondary rounded-full border border-secondary mt-1.5"
-      style={{ left: '-4.5px' }}
-    ></div>
-    <div className="my-0.5 text-xs">{time}</div>
-    <h3 className="font-semibold">{position}</h3>
-    <div className="mb-4 font-normal">
-      <a href={companyLink} target="_blank" rel="noreferrer">
-        {company}
-      </a>
-    </div>
-  </li>
-);
+import SectionCard from '../section-card';
+import { Timeline, TimelineItem } from '../timeline';
 
 const ExperienceCard = ({
   experiences,
@@ -39,61 +16,57 @@ const ExperienceCard = ({
     const array = [];
     for (let index = 0; index < 2; index++) {
       array.push(
-        <ListItem
+        <TimelineItem
           key={index}
+          accent="secondary"
           time={skeleton({
             widthCls: 'w-5/12',
             heightCls: 'h-4',
           })}
-          position={skeleton({
+          title={skeleton({
             widthCls: 'w-6/12',
             heightCls: 'h-4',
             className: 'my-1.5',
           })}
-          company={skeleton({ widthCls: 'w-6/12', heightCls: 'h-3' })}
+          subtitle={skeleton({ widthCls: 'w-6/12', heightCls: 'h-3' })}
         />,
       );
     }
 
     return array;
   };
+
   return (
-    <div className="card shadow-lg card-sm bg-base-100">
-      <div className="card-body">
-        <div className="mx-3">
-          <h5 className="card-title">
-            {loading ? (
-              skeleton({ widthCls: 'w-32', heightCls: 'h-8' })
-            ) : (
-              <span className="text-secondary">Experience</span>
-            )}
-          </h5>
-        </div>
-        <div className="text-base-content">
-          <ol className="relative border-l-2 border-secondary/30 my-2 mx-4">
-            {loading ? (
-              renderSkeleton()
-            ) : (
-              <Fragment>
-                {experiences.map((experience, index) => (
-                  <ListItem
-                    key={index}
-                    time={`${experience.from} - ${experience.to}`}
-                    position={experience.position}
-                    company={experience.company}
-                    companyLink={
-                      experience.companyLink
-                        ? experience.companyLink
-                        : undefined
-                    }
-                  />
-                ))}
-              </Fragment>
-            )}
-          </ol>
-        </div>
+    <SectionCard
+      icon={<MdWorkOutline />}
+      title="Experience"
+      accent="secondary"
+      loading={loading}
+      size="sm"
+    >
+      <div className="text-base-content">
+        <Timeline accent="secondary">
+          {loading ? (
+            renderSkeleton()
+          ) : (
+            <Fragment>
+              {experiences.map((experience, index) => (
+                <TimelineItem
+                  key={index}
+                  accent="secondary"
+                  time={`${experience.from} - ${experience.to}`}
+                  title={experience.position}
+                  subtitle={experience.company}
+                  subtitleLink={
+                    experience.companyLink ? experience.companyLink : undefined
+                  }
+                />
+              ))}
+            </Fragment>
+          )}
+        </Timeline>
       </div>
-    </div>
+    </SectionCard>
   );
 };
 
