@@ -53,7 +53,7 @@ const EducationCard = ({
   };
 
   return (
-    <div className="card shadow-lg card-sm bg-base-100">
+    <div className="card shadow-lg card-sm bg-base-100 border-t-4 border-accent">
       <div className="card-body">
         <div className="mx-3">
           <h5 className="card-title">

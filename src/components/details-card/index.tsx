@@ -27,7 +27,10 @@ import {
   SanitizedGithub,
   SanitizedSocial,
 } from '../../interfaces/sanitized-config';
+import { ACCENTS, accentAt } from '../../constants';
 import { skeleton } from '../../utils';
+
+type Accent = (typeof ACCENTS)[number];
 
 type Props = {
   profile: Profile | null;
@@ -63,11 +66,17 @@ const ListItem: React.FC<{
   value: React.ReactNode;
   link?: string;
   skeleton?: boolean;
-}> = ({ icon, title, value, link, skeleton = false }) => {
+  accent?: Accent;
+}> = ({ icon, title, value, link, skeleton = false, accent = ACCENTS[0] }) => {
   return (
     <div className="flex justify-start py-2 px-1 items-center">
       <div className="grow font-medium gap-2 flex items-center my-1">
-        {icon} {title}
+        <span
+          className={`w-7 h-7 shrink-0 rounded-lg flex items-center justify-center ${accent.bg} ${accent.text}`}
+        >
+          {icon}
+        </span>
+        {title}
       </div>
       <div
         className={`${
@@ -81,7 +90,9 @@ const ListItem: React.FC<{
           href={link}
           target="_blank"
           rel="noreferrer"
-          className="flex justify-start py-2 px-1 items-center"
+          className={`flex justify-start py-2 px-1 items-center ${
+            link ? 'link link-hover' : ''
+          }`}
         >
           {value}
         </a>
@@ -96,7 +107,8 @@ const OrganizationItem: React.FC<{
   value: React.ReactNode | string;
   link?: string;
   skeleton?: boolean;
-}> = ({ icon, title, value, link, skeleton = false }) => {
+  accent?: Accent;
+}> = ({ icon, title, value, link, skeleton = false, accent = ACCENTS[0] }) => {
   const renderValue = () => {
     if (typeof value === 'string') {
       return value.split(' ').map((company) => {
@@ -110,6 +122,7 @@ const OrganizationItem: React.FC<{
               target="_blank"
               rel="noreferrer"
               key={company}
+              className="link link-hover"
             >
               {company}
             </a>
@@ -125,7 +138,12 @@ const OrganizationItem: React.FC<{
   return (
     <div className="flex justify-start py-2 px-1 items-center">
       <div className="grow font-medium gap-2 flex items-center my-1">
-        {icon} {title}
+        <span
+          className={`w-7 h-7 shrink-0 rounded-lg flex items-center justify-center ${accent.bg} ${accent.text}`}
+        >
+          {icon}
+        </span>
+        {title}
       </div>
       <div
         className={`${
@@ -151,6 +169,11 @@ const OrganizationItem: React.FC<{
  * @return {JSX.Element} The details card component.
  */
 const DetailsCard = ({ profile, loading, social, github }: Props) => {
+  // Hidden rows short-circuit before calling next(), so colors cycle through
+  // the visible rows only.
+  let row = 0;
+  const next = () => accentAt(row++);
+
   const renderSkeleton = () => {
     const array = [];
     for (let index = 0; index < 4; index++) {
@@ -169,7 +192,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
   };
 
   return (
-    <div className="card shadow-lg card-sm bg-base-100">
+    <div className="card shadow-lg card-sm bg-base-100 border-t-4 border-primary">
       <div className="card-body">
         <div className="text-base-content">
           {loading || !profile ? (
@@ -178,6 +201,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
             <Fragment>
               {profile.location && (
                 <ListItem
+                  accent={next()}
                   icon={<MdLocationOn />}
                   title="Based in:"
                   value={profile.location}
@@ -185,6 +209,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               )}
               {profile.company && (
                 <OrganizationItem
+                  accent={next()}
                   icon={<FaBuilding />}
                   title="Organization:"
                   value={profile.company}
@@ -196,6 +221,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
                 />
               )}
               <ListItem
+                accent={next()}
                 icon={<AiFillGithub />}
                 title="GitHub:"
                 value={github.username}
@@ -203,6 +229,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               />
               {social?.researchGate && (
                 <ListItem
+                  accent={next()}
                   icon={<SiResearchgate />}
                   title="ResearchGate:"
                   value={social.researchGate}
@@ -211,6 +238,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               )}
               {social?.x && (
                 <ListItem
+                  accent={next()}
                   icon={<SiX />}
                   title="X:"
                   value={social.x}
@@ -219,6 +247,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               )}
               {social?.mastodon && (
                 <ListItem
+                  accent={next()}
                   icon={<FaMastodon />}
                   title="Mastodon:"
                   value={getFormattedMastodonValue(social.mastodon, false)}
@@ -227,6 +256,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               )}
               {social?.linkedin && (
                 <ListItem
+                  accent={next()}
                   icon={<FaLinkedin />}
                   title="LinkedIn:"
                   value={social.linkedin}
@@ -235,6 +265,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               )}
               {social?.dribbble && (
                 <ListItem
+                  accent={next()}
                   icon={<CgDribbble />}
                   title="Dribbble:"
                   value={social.dribbble}
@@ -243,6 +274,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               )}
               {social?.behance && (
                 <ListItem
+                  accent={next()}
                   icon={<FaBehanceSquare />}
                   title="Behance:"
                   value={social.behance}
@@ -251,6 +283,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               )}
               {social?.facebook && (
                 <ListItem
+                  accent={next()}
                   icon={<FaFacebook />}
                   title="Facebook:"
                   value={social.facebook}
@@ -259,6 +292,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               )}
               {social?.instagram && (
                 <ListItem
+                  accent={next()}
                   icon={<AiFillInstagram />}
                   title="Instagram:"
                   value={social.instagram}
@@ -267,6 +301,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               )}
               {social?.reddit && (
                 <ListItem
+                  accent={next()}
                   icon={<FaReddit />}
                   title="Reddit:"
                   value={social.reddit}
@@ -275,6 +310,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               )}
               {social?.threads && (
                 <ListItem
+                  accent={next()}
                   icon={<FaSquareThreads />}
                   title="Threads:"
                   value={social.threads}
@@ -283,6 +319,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               )}
               {social?.youtube && (
                 <ListItem
+                  accent={next()}
                   icon={<FaYoutube />}
                   title="YouTube:"
                   value={`@${social.youtube}`}
@@ -291,6 +328,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               )}
               {social?.udemy && (
                 <ListItem
+                  accent={next()}
                   icon={<SiUdemy />}
                   title="Udemy:"
                   value={social.udemy}
@@ -299,6 +337,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               )}
               {social?.medium && (
                 <ListItem
+                  accent={next()}
                   icon={<AiFillMediumSquare />}
                   title="Medium:"
                   value={social.medium}
@@ -307,6 +346,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               )}
               {social?.dev && (
                 <ListItem
+                  accent={next()}
                   icon={<FaDev />}
                   title="Dev:"
                   value={social.dev}
@@ -315,6 +355,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               )}
               {social?.stackoverflow && (
                 <ListItem
+                  accent={next()}
                   icon={<FaStackOverflow />}
                   title="Stack Overflow:"
                   value={social.stackoverflow.split('/').slice(-1)}
@@ -323,6 +364,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               )}
               {social?.website && (
                 <ListItem
+                  accent={next()}
                   icon={<FaGlobe />}
                   title="Website:"
                   value={social.website
@@ -337,6 +379,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               )}
               {social?.telegram && (
                 <ListItem
+                  accent={next()}
                   icon={<FaTelegram />}
                   title="Telegram"
                   value={social.telegram}
@@ -345,6 +388,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               )}
               {social?.phone && (
                 <ListItem
+                  accent={next()}
                   icon={<RiPhoneFill />}
                   title="Phone:"
                   value={social.phone}
@@ -353,6 +397,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               )}
               {social?.email && (
                 <ListItem
+                  accent={next()}
                   icon={<RiMailFill />}
                   title="Email:"
                   value={social.email}
@@ -361,6 +406,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               )}
               {social?.discord && (
                 <ListItem
+                  accent={next()}
                   icon={<RiDiscordFill />}
                   title="Discord:"
                   value={social.discord}

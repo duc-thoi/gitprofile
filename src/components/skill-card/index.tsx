@@ -22,7 +22,7 @@ const SkillCard = ({
   };
 
   return (
-    <div className="card shadow-lg card-sm bg-base-100">
+    <div className="card shadow-lg card-sm bg-base-100 border-t-4 border-primary">
       <div className="card-body">
         <div className="mx-3">
           <h5 className="card-title">

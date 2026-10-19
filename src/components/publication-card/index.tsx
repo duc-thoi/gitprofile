@@ -77,7 +77,7 @@ const PublicationCard = ({
   const renderPublications = () => {
     return publications.map((item, index) => (
       <a
-        className="card shadow-md card-sm bg-base-100 cursor-pointer transition-transform hover:scale-[1.02]"
+        className="card shadow-md card-sm bg-base-100 cursor-pointer transition-transform hover:scale-[1.02] border-l-4 border-secondary"
         key={index}
         href={item.link}
         target="_blank"
@@ -90,17 +90,17 @@ const PublicationCard = ({
                 <div className="text-center w-full">
                   <h2 className="font-medium mb-2">{item.title}</h2>
                   {item.conferenceName && (
-                    <p className="text-base-content opacity-50 text-sm">
+                    <p className="text-tint-secondary text-sm">
                       {item.conferenceName}
                     </p>
                   )}
                   {item.journalName && (
-                    <p className="text-base-content opacity-50 text-sm">
+                    <p className="text-tint-secondary text-sm">
                       {item.journalName}
                     </p>
                   )}
                   {item.authors && (
-                    <p className="text-base-content opacity-50 text-sm">
+                    <p className="text-tint-secondary text-sm font-light">
                       Author: {item.authors}
                     </p>
                   )}

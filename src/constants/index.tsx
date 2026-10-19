@@ -1,7 +1,7 @@
 export const LOCAL_STORAGE_KEY_NAME = 'gitprofile-theme';
 
 export const BG_COLOR =
-  'bg-linear-to-br from-base-300 via-base-200 to-base-300';
+  'bg-base-200 bg-linear-to-br from-primary/10 via-base-200 to-secondary/10';
 
 /**
  * Accent classes cycled through by index to give repeated items (skill badges,
@@ -11,37 +11,37 @@ export const BG_COLOR =
 export const ACCENTS = [
   {
     badge: 'badge-primary',
-    text: 'text-primary',
+    text: 'text-tint-primary',
     bg: 'bg-primary/10',
     border: 'border-primary/40',
   },
   {
     badge: 'badge-secondary',
-    text: 'text-secondary',
+    text: 'text-tint-secondary',
     bg: 'bg-secondary/10',
     border: 'border-secondary/40',
   },
   {
     badge: 'badge-accent',
-    text: 'text-accent',
+    text: 'text-tint-accent',
     bg: 'bg-accent/10',
     border: 'border-accent/40',
   },
   {
     badge: 'badge-info',
-    text: 'text-info',
+    text: 'text-tint-info',
     bg: 'bg-info/10',
     border: 'border-info/40',
   },
   {
     badge: 'badge-success',
-    text: 'text-success',
+    text: 'text-tint-success',
     bg: 'bg-success/10',
     border: 'border-success/40',
   },
   {
     badge: 'badge-warning',
-    text: 'text-warning',
+    text: 'text-tint-warning',
     bg: 'bg-warning/10',
     border: 'border-warning/40',
   },

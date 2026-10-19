@@ -96,7 +96,7 @@ const GithubProjectCard = ({
           <div>
             <div className="flex items-center truncate">
               <div className="card-title text-lg tracking-wide flex text-base-content">
-                <MdInsertLink className="my-auto" />
+                <MdInsertLink className="my-auto text-tint-primary" />
                 <span>{item.name}</span>
               </div>
             </div>
@@ -105,12 +105,12 @@ const GithubProjectCard = ({
             </p>
           </div>
           <div className="flex justify-between text-sm text-base-content truncate">
-            <div className="flex grow opacity-60">
-              <span className="mr-3 flex items-center">
+            <div className="flex grow">
+              <span className="mr-3 flex items-center text-tint-warning">
                 <AiOutlineStar className="mr-0.5" />
                 <span>{item.stargazers_count}</span>
               </span>
-              <span className="flex items-center">
+              <span className="flex items-center text-tint-info">
                 <AiOutlineFork className="mr-0.5" />
                 <span>{item.forks_count}</span>
               </span>

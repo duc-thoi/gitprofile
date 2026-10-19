@@ -70,7 +70,7 @@ const ExternalProjectCard = ({
   const renderExternalProjects = () => {
     return externalProjects.map((item, index) => (
       <a
-        className="card shadow-md card-sm bg-base-100 cursor-pointer transition-transform hover:scale-[1.02]"
+        className="card shadow-md card-sm bg-base-100 cursor-pointer transition-transform hover:scale-[1.02] border-l-4 border-accent"
         key={index}
         href={item.link}
         onClick={(e) => {
@@ -96,7 +96,7 @@ const ExternalProjectCard = ({
                 <div className="text-center w-full">
                   <h2 className="font-medium text-center mb-2">{item.title}</h2>
                   {item.imageUrl && (
-                    <div className="avatar opacity-90">
+                    <div className="avatar">
                       <div className="w-24 h-24 mask mask-squircle">
                         <LazyImage
                           src={item.imageUrl}
