@@ -96,7 +96,7 @@ const BlogCard = ({
     return articles && articles.length ? (
       articles.slice(0, blog.limit).map((article, index) => (
         <a
-          className="card shadow-md card-sm bg-base-100 cursor-pointer transition-transform hover:scale-[1.02]"
+          className="card shadow-md card-sm bg-base-100 cursor-pointer transition-transform hover:scale-[1.02] border-l-4 border-info"
           key={index}
           href={article.link}
           onClick={(e) => {
@@ -117,7 +117,7 @@ const BlogCard = ({
         >
           <div className="p-8 h-full w-full">
             <div className="flex items-center flex-col md:flex-row">
-              <div className="avatar mb-5 md:mb-0 opacity-90">
+              <div className="avatar mb-5 md:mb-0">
                 <div className="w-24 h-24 mask mask-squircle">
                   <LazyImage
                     src={article.thumbnail}
@@ -136,7 +136,7 @@ const BlogCard = ({
                     <h2 className="font-medium text-base-content">
                       {article.title}
                     </h2>
-                    <p className="text-base-content opacity-50 text-xs">
+                    <p className="text-tint-info text-xs">
                       {formatDistance(article.publishedAt, new Date(), {
                         addSuffix: true,
                       })}
@@ -165,7 +165,7 @@ const BlogCard = ({
       ))
     ) : (
       <div className="text-center mb-6">
-        <PiNewspaper className="mx-auto h-12 w-12 opacity-30" />
+        <PiNewspaper className="mx-auto h-12 w-12 text-info/40" />
         <p className="mt-1 text-sm opacity-50 text-base-content">
           No recent post
         </p>

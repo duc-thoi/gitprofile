@@ -51,6 +51,26 @@
   --noise: 0;
 }
 
+/*
+ * Theme colors pulled toward base-content so they stay readable as text.
+ * Pastel themes (cupcake, pastel, valentine, …) use near-white primary,
+ * secondary and accent colors that are unreadable as raw text color.
+ */
+@utility text-tint-* {
+  color: color-mix(in oklab, --value(--color-*) 40%, var(--color-base-content));
+}
+
+@utility text-gradient-brand {
+  background-image: linear-gradient(
+    to right,
+    color-mix(in oklab, var(--color-primary) 40%, var(--color-base-content)),
+    color-mix(in oklab, var(--color-secondary) 40%, var(--color-base-content)),
+    color-mix(in oklab, var(--color-accent) 40%, var(--color-base-content))
+  );
+  background-clip: text;
+  color: transparent;
+}
+
 * {
   scrollbar-width: thin;
 }

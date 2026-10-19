@@ -71,7 +71,7 @@ const AvatarCard: React.FC<AvatarCardProps> = ({
             {loading || !profile ? (
               skeleton({ widthCls: 'w-48', heightCls: 'h-8' })
             ) : (
-              <span className="text-base-content">{profile.name}</span>
+              <span className="text-gradient-brand">{profile.name}</span>
             )}
           </h5>
           <div className="mt-3 text-base-content font-mono">
